@@ -1,3 +1,7 @@
+############################
+# quick and dirty ref for the input method
+############################
+
 greeting = 'Hello'
 name = '''
 Multiline 

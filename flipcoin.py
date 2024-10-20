@@ -1,3 +1,10 @@
+##################################################################
+#
+# Exercise on randomness: flip a coin many times, 
+# then generate some facts on the results
+#
+##################################################################
+
 # init some defaults
 from termcolor import colored
 import random

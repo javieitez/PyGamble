@@ -1,3 +1,9 @@
+################################################################
+#
+# Enter two numbers, then some operations are performed on them
+#
+################################################################
+
 # enter 2 digits
 a = b = False
 while a == False:

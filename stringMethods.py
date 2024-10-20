@@ -1,3 +1,10 @@
+##################################################
+#
+#         Demonstration of the different 
+#         string methods
+#
+##################################################
+
 # termcolor needs to be installed via apt or pip
 from termcolor import colored
 

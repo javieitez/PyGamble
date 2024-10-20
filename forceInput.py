@@ -1,3 +1,11 @@
+####################################################
+#
+# quick demo for forced inputs and screen colors
+# the user is forced to enter a certain type of string, 
+# the promp repeats if the input is invalid
+#
+####################################################
+
 # termcolor needs to be installed via apt or pip
 from termcolor import colored
 a = False

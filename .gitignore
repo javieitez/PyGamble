@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# vim swaps
+*.swp
 
 # C extensions
 *.so

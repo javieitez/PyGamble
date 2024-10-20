@@ -1,5 +1,8 @@
 greeting = 'Hello'
-name = 'biatch'
+name = '''
+Multiline 
+stringed 
+biatch'''
 print(greeting, str(name+'!'))
 
 yourName = input('Enter your name: ')

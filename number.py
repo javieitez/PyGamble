@@ -1,9 +1,6 @@
 # enter 2 digits
-try:
     firstNumber = int(input('Enter a Number: '))
     secondNumber = int(input('Enter another Number: '))
-except:
-    print('Must be a Number')
 
 #Compare which one is bigger
 if firstNumber > secondNumber:

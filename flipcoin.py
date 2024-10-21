@@ -11,14 +11,40 @@ import random
 coinSides = ['heads','tails']
 headsCount = 0
 tailsCount = 0
+prevFlip = 'nothing'
+consecutiveHeads = 0
+consecutiveTails = 0
+maxConsecutiveHeads = 0
+maxConsecutiveTails = 0
+
 a = False
+
+# keep track of consecutive matches
+def checkConsecutive():
+    global consecutiveTails, consecutiveHeads
+    if coinFlip == prevFlip == 'heads':
+        consecutiveHeads += 1
+        singConsecutive(consecutiveHeads, 'heads')
+    elif coinFlip == prevFlip == 'tails':
+        consecutiveTails += 1
+        singConsecutive(consecutiveTails, 'tails')
+    else:
+        consecutiveHeads = 1
+        consecutiveTails = 1
+
+# blink if two or more consecutive matches
+def singConsecutive(a, b):
+    if a > 5:
+        print(a, 'consecutive', b, '!!!')
 
 # better color output
 def p(a):
     if a == 'heads':
         print(colored(a, 'yellow'))
-    else:
+    elif a == 'tails':
         print(colored(a, 'cyan'))
+    else:
+        print(colored(a, 'green'))
 
 # force the user to input an integer
 while a == False:
@@ -32,9 +58,12 @@ while flipTimes > 0:
     p(coinFlip)
     if coinFlip == 'heads':
         headsCount += 1
+        checkConsecutive()
     else:
         tailsCount += 1 
+        checkConsecutive()
     flipTimes -=1
+    prevFlip = coinFlip
 
 # Show some funny stats about the flips
 print('Coin was flipped', headsCount+tailsCount, 'times')
@@ -49,3 +78,4 @@ if headsCount > tailsCount:
     showMeStats(headsCount, tailsCount, 'heads')
 else:
     showMeStats(tailsCount, headsCount, 'tails')
+

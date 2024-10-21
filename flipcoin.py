@@ -32,6 +32,15 @@ def checkConsecutive():
         consecutiveHeads = 1
         consecutiveTails = 1
 
+# keep track of max consecutive matches
+def recordMaxConsecutives():
+    global consecutiveTails, consecutiveHeads
+    global maxConsecutiveTails, maxConsecutiveHeads
+    if maxConsecutiveHeads < consecutiveHeads:
+        maxConsecutiveHeads = consecutiveHeads
+    elif maxConsecutiveTails < consecutiveTails:
+        maxConsecutiveTails = consecutiveTails
+
 # blink if two or more consecutive matches
 def singConsecutive(a, b):
     if a > 5:
@@ -63,12 +72,16 @@ while flipTimes > 0:
         tailsCount += 1 
         checkConsecutive()
     flipTimes -=1
+    # update counters
+    recordMaxConsecutives()
     prevFlip = coinFlip
 
+p('*********************')
 # Show some funny stats about the flips
 print('Coin was flipped', headsCount+tailsCount, 'times')
 print(headsCount, 'heads,', tailsCount, 'tails')
 
+p('*********************')
 def showMeStats(a, b, whatMore):
     countDiff = a-b
     print(countDiff, 'more', whatMore)
@@ -78,4 +91,6 @@ if headsCount > tailsCount:
     showMeStats(headsCount, tailsCount, 'heads')
 else:
     showMeStats(tailsCount, headsCount, 'tails')
-
+p('*********************')
+print('Maximum number of consecutive heads:', maxConsecutiveHeads)
+print('Maximum number of consecutive tails:', maxConsecutiveTails)

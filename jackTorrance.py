@@ -1,11 +1,11 @@
+#!/usr/bin/python3
+
 #######################################################
 # Print a sentence, indefinitley, with random 
 # indentations and styles
 #######################################################
 w = 'All Work And No Play Makes Jack A Dull Boy'
 x = 9999
-# termcolor needs to be installed via apt or pip
-from termcolor import colored as c
 import random as r
 import time as t
 

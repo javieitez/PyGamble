@@ -1,0 +1,17 @@
+Overall, the philosophy is to attack the availability problem from two
+complementary directions:  to reduce the number of software errors through
+rigorous testing of running systems, and to reduce the effect of the
+remaining errors by providing for recovery from them.  An interesting footnote
+to this design is that now a system failure can usually be considered to be
+the result of two program errors:  the first, in the program that started the
+problem; the second, in the recovery routine that could not protect the
+system.  -- A. L. Scherr, "Functional Structure of IBM Virtual Storage Operating
+Systems, Part II: OS/VS-2 Concepts and Philosophies," IBM Systems Journal,
+Vol. 12, No. 4, 1973, pp. 382-400
+The world is full of people who have never, since childhood, met an
+open doorway with an open mind.
+		-- E. B. White
+Objects in mirror may be closer than they appear.
+The public demands certainties;  it must be told definitely and a bit
+raucously that this is true and that is false.  But there are no certainties.
+		-- H. L. Mencken, "Prejudice"

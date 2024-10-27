@@ -56,11 +56,12 @@ displayCard()
 
 # guess the card
 def betCardNumber():
-    global yourBetSuit, yourBetNumber  
+    global yourBetNumber  
     myRegex = '^(A|J|Q|K|[2-7])$' # available inputs
     while not re.match(myRegex, yourBetNumber):
         yourBetNumber = input('guess the card number: (A, 2 to 7, J, Q or K)').upper()
 def betCardSuit():
+    global yourBetSuit  
     myRegex = '^(H|D|S|C)$' # available inputs 
     while not re.match(myRegex, yourBetSuit):
         yourBetSuit = input('choose a suit: (H)earts, (D)iamonds, (S)pades or (C)lubs ').upper()

@@ -55,11 +55,12 @@ def revealCard():
 displayCard()
 
 # guess the card
-def makeYourBet():
+def betCardNumber():
     global yourBetSuit, yourBetNumber  
     myRegex = '^(A|J|Q|K|[2-7])$' # available inputs
     while not re.match(myRegex, yourBetNumber):
         yourBetNumber = input('guess the card number: (A, 2 to 7, J, Q or K)').upper()
+def betCardSuit():
     myRegex = '^(H|D|S|C)$' # available inputs 
     while not re.match(myRegex, yourBetSuit):
         yourBetSuit = input('choose a suit: (H)earts, (D)iamonds, (S)pades or (C)lubs ').upper()
@@ -67,7 +68,8 @@ def makeYourBet():
 #debug
 print(cardNumber, suit)
 
-makeYourBet()
+betCardNumber()
+betCardSuit()
 
 # turn your keystrokes into readable words
 def yourBetWas():
@@ -102,7 +104,7 @@ def ph(a, b, c):
     myStr = a + ' ' + b + ' is ' + c
     print(myStr)
 
-# convert ard string to int
+# convert card string to int
 def convertCardNumber(i):
     if i == 'A':
         return 1

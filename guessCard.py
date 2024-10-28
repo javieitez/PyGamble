@@ -109,24 +109,14 @@ def ph(a, b, c):
 def convertCardNumber(i):
     if i == 'A':
         return 1
-    elif i == '2':
-        return 2
-    elif i == '3':
-        return 3
-    elif i == '4':
-        return 4
-    elif i == '5':
-        return 5
-    elif i == '6':
-        return 6
-    elif i == '7':
-        return 7
     elif i == 'J':
         return 10
     elif i == 'Q':
         return 11
     elif i == 'K':
         return 12
+    else:
+        return int(i)
 
 # give the user a hint about hits and misses
 def giveHints():

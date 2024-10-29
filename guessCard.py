@@ -3,7 +3,7 @@
 # guess the card game      ##############################
 # user will have three hints until the card is revealed #
 #########################################################
-import re, random #, sys
+import re, random 
 from termcolor import colored as c
 
 # cards:
@@ -86,13 +86,13 @@ def betCardSuit():
 
 #####################################################################
 #debug 
-print(c('**************', redSuitColor), cardNumber, suit)
+#print(c('**************', redSuitColor), cardNumber, suit)
 #####################################################################
 #debug function
-def pDebug():
-    print(c('#DEBUG:', redSuitColor), 'Number:', cardNum2Int(yourBetNumber), 'vs', cardNumber,
-          'Suit:', yourBetSuit,
-          'vs', suit, 'hitSuit:', hitSuit, 'hitNumber:', hitNumber )
+#def pDebug():
+#    print(c('#DEBUG:', redSuitColor), 'Number:', cardNum2Int(yourBetNumber), 'vs', cardNumber,
+#          'Suit:', yourBetSuit,
+#          'vs', suit, 'hitSuit:', hitSuit, 'hitNumber:', hitNumber )
 #####################################################################
 
 betCardNumber()
@@ -193,9 +193,9 @@ def makeHints():
     if x == y:
         hitNumber = True
 
-winLine = c('Right suit and number. You win', 
+winLine = c('Right suit and number. You win.', 
                 'green', attrs=['reverse'])
-loseLine = c('No more tries left. You lose :(',
+loseLine = c('No more tries left. You lose... :(',
              redSuitColor, attrs=['reverse'])
 
 while guessTries >=1:
@@ -203,9 +203,7 @@ while guessTries >=1:
     makeHints()
     y = cardNum2Int(cardNumber)
     z = cardNum2Int(yourBetNumber)
-    pDebug()
     if hitSuit == True and hitNumber == True:
-        yourBetWas()
         bottomLine = winLine
         guessTries = 0
         break
@@ -227,8 +225,9 @@ while guessTries >=1:
         guessTries -=1
         displayCard()
         yourBetWas()
+        b = suit2Color(yourBetSuit)
         print('You missed both suit and number.')
-        print('The card', compareColor(yourBetSuit, suitColor), 
+        print('The suit', compareColor(yourBetSuit, suitColor), 
               ',also', compareCardNumber(y, z)) 
         betCardNumber()
         betCardSuit()
@@ -240,5 +239,5 @@ if hitSuit == True and hitNumber == True:
     bottomLine = winLine
 
 yourBetWas()
-print(bottomLine)
 revealCard()
+print(bottomLine)

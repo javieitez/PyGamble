@@ -10,7 +10,10 @@ from termcolor import colored as c
 clubs   = chr(9827) 
 diamonds = chr(9830) 
 hearts  = chr(9829) 
-spades= chr(9824) 
+spades= chr(9824)
+blackSuitColor = 'grey'
+redSuitColor = 'red'
+
 
 # init the cards deck
 suits = ['C', 'D', 'H', 'S']
@@ -25,11 +28,15 @@ guessTries = 4
 cardNumber = random.choice(cardNumbers)
 suit = random.choice(suits)
 
+print('''
+      
+        ** GUESS THE CARD **''')
+
 def displayCard():
     rows = ['', '', '', '','']
     rows[0] += '    ___ ' # top line of card
     rows[1] += '   |## |' 
-    rows[2] += '   |###|   {}'.format(c('** GUESS THE CARD **', 'white'))
+    rows[2] += '   |###|   '
     rows[3] += '   |_##|      {} tries left'.format(c(guessTries, 'white'))
     rows[4] += ''
     for row in rows:
@@ -38,9 +45,9 @@ def displayCard():
 def setCardColor():
     global suitColor
     if suit == 'H' or suit == 'D':
-        suitColor = 'red'
+        suitColor = redSuitColor
     else:
-        suitColor = 'cyan'
+        suitColor = blackSuitColor
 
 setCardColor()
 
@@ -48,14 +55,18 @@ def revealCard():
     mySuit = suit2Icon(suit)
     rows = ['', '', '', '','']
     rows[0] += '    ___  ' # top line of card
-    rows[1] += '   |{} |'.format(c(cardNumber.ljust(2), suitColor))
-    rows[2] += '   | {} |'.format(c(mySuit, suitColor))
-    rows[3] += '   |_{}|'.format(c(cardNumber.rjust(2), suitColor))
+    rows[1] += '   |{} |'.format(cc(cardNumber.ljust(2), suitColor))
+    rows[2] += '   | {} |'.format(cc(mySuit, suitColor))
+    rows[3] += '   |_{}|'.format(cc(cardNumber.rjust(2), suitColor))
     rows[4] += ''
     for row in rows:
          print(row)
 
 displayCard()
+
+# colored background card characters
+def cc(txt, color):
+    return c(txt, color, 'on_white')
 
 # guess the card
 def betCardNumber():
@@ -69,17 +80,19 @@ def betCardSuit():
     yourBetSuit = 'none yet' # must init every time
     myRegex = '^(H|D|S|C)$' # available inputs 
     while not re.match(myRegex, yourBetSuit):
-        yourBetSuit = input('choose a suit: (H)earts, (D)iamonds, (S)pades or (C)lubs ').upper()
+        print('(H)', cc(hearts, redSuitColor), '(S)', cc(spades, blackSuitColor), 
+              '(D)', cc(diamonds, redSuitColor), '(C)', cc(clubs, blackSuitColor)) 
+        yourBetSuit = input('choose a suit:').upper()
 
 #####################################################################
 #debug 
-print(c('**************', 'red'), cardNumber, suit)
+print(c('**************', redSuitColor), cardNumber, suit)
 #####################################################################
 #debug function
 def pDebug():
-    print(c('#DEBUG:', 'red'), 'yourBetNumber:', cardNum2Int(yourBetNumber), cardNumber,
-          'yourBetSuit:', yourBetSuit,
-          'suit:', suit, 'hitSuit:', hitSuit, 'hitNumber:', hitNumber )
+    print(c('#DEBUG:', redSuitColor), 'Number:', cardNum2Int(yourBetNumber), 'vs', cardNumber,
+          'Suit:', yourBetSuit,
+          'vs', suit, 'hitSuit:', hitSuit, 'hitNumber:', hitNumber )
 #####################################################################
 
 betCardNumber()
@@ -125,9 +138,9 @@ def suit2Icon(i):
 # get card suit color
 def suit2Color(i):
     if i == 'D' or i == 'H':
-        return 'red'
+        return redSuitColor
     else:
-        return 'cyan'
+        return blackSuitColor
 
 # convert card suit to full word
 def suit2Word(i):
@@ -145,7 +158,7 @@ def yourBetWas():
     a = suit2Word(yourBetSuit)
     b = suit2Color(yourBetSuit)
     z = suit2Icon(yourBetSuit)
-    print('your bet was', c(w, b), 'of', c(a, b), c(z, b))
+    print('your bet was', cc(w, b), 'of', cc(a, b), cc(z, b))
 
 def compareCardNumber(a, b):
     if a > b:
@@ -156,9 +169,9 @@ def compareCardNumber(a, b):
         return 'number is correct'
 
 def compareColor(a, b):
-    if (a == 'D' or a == 'H') and b == 'red':
+    if (a == 'D' or a == 'H') and b == redSuitColor:
         return 'color is right'
-    elif (a == 'S' or a == 'C') and b == 'cyan':
+    elif (a == 'S' or a == 'C') and b == blackSuitColor:
         return 'color is right'
     else:
         return 'color is wrong'
@@ -167,9 +180,9 @@ def compareColor(a, b):
 def makeHints():
     global hitColor, hitNumber, hitSuit
     # check if color matches
-    if (yourBetSuit == 'D' or yourBetSuit == 'H') and suitColor == 'red':
+    if (yourBetSuit == 'D' or yourBetSuit == 'H') and suitColor == redSuitColor:
         hitColor = True
-    elif (yourBetSuit == 'S' or yourBetSuit == 'C') and suitColor == 'cyan':
+    elif (yourBetSuit == 'S' or yourBetSuit == 'C') and suitColor == blackSuitColor:
         hitColor = True
     # then check suit
     if yourBetSuit == suit:
@@ -180,42 +193,52 @@ def makeHints():
     if x == y:
         hitNumber = True
 
-def calculateResult():
-    global guessTries 
-    global suitColor, yourBetSuit, hitColor, hitNumber, hitSuit, suit
+winLine = c('Right suit and number. You win', 
+                'green', attrs=['reverse'])
+loseLine = c('No more tries left. You lose :(',
+             redSuitColor, attrs=['reverse'])
+
+while guessTries >=1:
+    bottomLine = loseLine
     makeHints()
-    guessTries -=1
-    pDebug()
     y = cardNum2Int(cardNumber)
     z = cardNum2Int(yourBetNumber)
+    pDebug()
     if hitSuit == True and hitNumber == True:
-        revealCard()
         yourBetWas()
-        print(c('You hitted both suit and number. you totally WON!!! ', 
-                'green', attrs=['blink', 'reverse']))
-        guessTries =0
-    elif hitSuit == True and hitNumber == False:
+        bottomLine = winLine
+        guessTries = 0
+        break
+    if hitSuit == True and hitNumber == False:
+        guessTries -=1
         displayCard()
         yourBetWas()
-        print('Not bad. You hitted the suit but', 
+        print('The suit is right but', 
               compareCardNumber(y,z)) 
         betCardNumber()
     elif hitSuit == False and hitNumber == True:
+        guessTries -=1
         displayCard()
         yourBetWas()
-        print('Not bad. You hitted the number and missed the suit.')
-        print('The card', compareColor(yourBetSuit, suitColor))
+        print('Right number. The suit is incorrect.')
+        print('The suit', compareColor(yourBetSuit, suitColor))
         betCardSuit()
     else: 
+        guessTries -=1
         displayCard()
         yourBetWas()
-        print('Not even close. You missed both suit and number.')
+        print('You missed both suit and number.')
         print('The card', compareColor(yourBetSuit, suitColor), 
-              ', also', compareCardNumber(y, z)) 
+              ',also', compareCardNumber(y, z)) 
         betCardNumber()
         betCardSuit()
 
 
-while guessTries >= 1:
-    calculateResult()
+# needs one final calculation 
+makeHints()
+if hitSuit == True and hitNumber == True:
+    bottomLine = winLine
 
+yourBetWas()
+print(bottomLine)
+revealCard()

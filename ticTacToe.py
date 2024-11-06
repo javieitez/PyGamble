@@ -13,10 +13,14 @@ t =	   [' ', ' ', ' ',' ', ' ', ' ',' ', ' ', ' ']
 tHistory = []
 tFree = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 movesCount = 0
-myPrompt = 'Your move, [1-9] or [H]elp: '
-myHelp ='''
+myPrompt = 'Your move, [1-9]: '
+myIntro = '''
 Classic TicTacToe game. 
+Try to put 3 on the same line.
 
+Press [H] for Help
+'''
+myHelp ='''
 Place your move by using the 
 following number keys
 
@@ -25,7 +29,7 @@ following number keys
 | 7 | 8 | 9 |
 
 '''
-
+print(myIntro)
 def validateLine(a, b, c):
 	if t[a]==t[b] and t[a]==t[c] and t[a]!=' ' :
 		return True
@@ -86,7 +90,8 @@ while movesCount < 9:
 	makeMove()
 	pMatrix()
 	checkLine()
-	compMove()
-	pMatrix()
-	checkLine()
-	print('Taken:', tHistory, 'Free:', tFree) #DEBUG
+	if movesCount < 9:
+		compMove()
+		pMatrix()
+		checkLine()
+	#print('Taken:', tHistory, 'Free:', tFree) #DEBUG

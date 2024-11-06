@@ -7,38 +7,86 @@ from termcolor import cprint as p
 
 yourSign = 'X'
 compSign = 'O'
-
 # build matrix data
-t =	   [[' ', ' ', ' '],
-        [' ', ' ', ' '],
-	    [' ', ' ', ' ']] 
-# build matrix representation, one cell per variable
-A1 = '| {} '.format(t[0][0])
-A2 = '| {} '.format(t[0][1])
-A3 = '| {} |'.format(t[0][2])
-B1 = '| {} '.format(t[1][0])
-B2 = '| {} '.format(t[1][1])
-B3 = '| {} |'.format(t[1][2])
-C1 = '| {} '.format(t[2][0])
-C2 = '| {} '.format(t[2][1])
-C3 = '| {} |'.format(t[2][2])
+t =	   [' ', ' ', ' ',' ', ' ', ' ',' ', ' ', ' '] 
+# keep move history
+tHistory = []
+tFree = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+movesCount = 0
+myPrompt = 'Your move, [1-9] or [H]elp: '
+myHelp ='''
+Classic TicTacToe game. 
 
-def pMatrix():
-	print(A1+A2+A3+'\n'+B1+B2+B3+'\n'+C1+C2+C3)
+Place your move by using the 
+following number keys
 
-def placeMove(z):
-		global t
-		if z =='1' or z =='2' or z =='3':
-			t[0][z] = 'x' #yourSign
+| 1 | 2 | 3 |
+| 4 | 5 | 6 |
+| 7 | 8 | 9 |
+
+'''
+
+def validateLine(a, b, c):
+	if t[a]==t[b] and t[a]==t[c] and t[a]!=' ' :
+		return True
 		
+def checkLine():
+	global movesCount
+	validCombis = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[6,4,2]]
+	for a in validCombis:
+		if validateLine(a[0],a[1],a[2]) == True:
+			print('You win!!')
+			movesCount = 9 
+	
+# build matrix representation, one cell per variable
+def pMatrix(): 
+	A1 = '| {} '.format(t[0])
+	A2 = '| {} '.format(t[1])
+	A3 = '| {} |'.format(t[2])
+	B1 = '| {} '.format(t[3])
+	B2 = '| {} '.format(t[4])
+	B3 = '| {} |'.format(t[5])
+	C1 = '| {} '.format(t[6])
+	C2 = '| {} '.format(t[7])
+	C3 = '| {} |'.format(t[8])
+	print('\n'+A1+A2+A3+'\n'+B1+B2+B3+'\n'+C1+C2+C3+'\n')
+	
+def compMove():
+	global t, tHistory, movesCount, tFree
+	z = r.choice(tFree)
+	t[z-1] = compSign
+	tHistory.append(z)
+	tFree.remove(z)
+	movesCount += 1
+	
+def placeMove(z):
+		global t, tHistory, movesCount, tFree
+		tHistory.append(z)
+		t[z-1] = yourSign
+		tFree.remove(z)
+		movesCount += 1
+
 # force user input 1 to 9
 def makeMove():
+	global myPrompt
 	a = False
 	while a == False:
-		b = input('Your move (1-9): ')
-		a = b.isdigit() and int(b)>0 and int(b)<9
+		b = input(myPrompt)
+		if b.upper() == 'H':
+			print(myHelp) 
+			myPrompt = 'Your move [1-9]: '
+		elif b.isdigit() and int(b) in tHistory:
+			print('Already taken!')
+		a = b.isdigit() and int(b)>0 and int(b)<=9 and int(b) not in tHistory
 	placeMove(int(b))
 
+# Let's go!
 pMatrix()
-makeMove()
-pMatrix()
+while movesCount < 9:
+	makeMove()
+	pMatrix()
+	checkLine()
+	compMove()
+	pMatrix()
+	checkLine()
+	print('Taken:', tHistory, 'Free:', tFree) #DEBUG

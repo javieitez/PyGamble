@@ -5,8 +5,12 @@
 import random as r
 from termcolor import cprint as p
 
-yourSign = 'X'
-compSign = 'O'
+
+player1 = 'Human'
+player2 = 'Computer'
+p1Sign = 'X'
+p2Sign = 'O'
+currentPlayer = ''
 # build matrix data
 t =	   [' ', ' ', ' ',' ', ' ', ' ',' ', ' ', ' '] 
 # keep move history
@@ -39,7 +43,7 @@ def checkLine():
 	validCombis = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[6,4,2]]
 	for a in validCombis:
 		if validateLine(a[0],a[1],a[2]) == True:
-			print('You win!!')
+			print(currentPlayer, 'wins')
 			movesCount = 9 
 	
 # build matrix representation, one cell per variable
@@ -54,19 +58,18 @@ def pMatrix():
 	C2 = '| {} '.format(t[7])
 	C3 = '| {} |'.format(t[8])
 	print('\n'+A1+A2+A3+'\n'+B1+B2+B3+'\n'+C1+C2+C3+'\n')
-	
-def compMove():
-	global t, tHistory, movesCount, tFree
-	z = r.choice(tFree)
-	t[z-1] = compSign
-	tHistory.append(z)
-	tFree.remove(z)
-	movesCount += 1
-	
+		
 def placeMove(z):
-		global t, tHistory, movesCount, tFree
+		global currentPlayer, t, tHistory, movesCount, tFree
+		if z == player2:
+			currentPlayer = player2
+			x = p2Sign
+			z = r.choice(tFree)
+		else:
+			x = p1Sign
+			currentPlayer = player1
 		tHistory.append(z)
-		t[z-1] = yourSign
+		t[z-1] = x
 		tFree.remove(z)
 		movesCount += 1
 
@@ -78,7 +81,6 @@ def makeMove():
 		b = input(myPrompt)
 		if b.upper() == 'H':
 			print(myHelp) 
-			myPrompt = 'Your move [1-9]: '
 		elif b.isdigit() and int(b) in tHistory:
 			print('Already taken!')
 		a = b.isdigit() and int(b)>0 and int(b)<=9 and int(b) not in tHistory
@@ -91,7 +93,7 @@ while movesCount < 9:
 	pMatrix()
 	checkLine()
 	if movesCount < 9:
-		compMove()
+		placeMove(player2)
 		pMatrix()
 		checkLine()
 	#print('Taken:', tHistory, 'Free:', tFree) #DEBUG

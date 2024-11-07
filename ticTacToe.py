@@ -1,9 +1,12 @@
 #!/usr/bin/python3
 #########################################################
-# TicTacToe                ##############################
+# TicTacToe                ##  github.com/javieitez    ##
+#
+# Unlike other python based TicTacToe games, this one
+# is a real Human vs Computer. The computer checks for
+# potential 3s instead of just placing random movements 
 #########################################################
 import random as r
-from termcolor import cprint as p
 
 player1 = 'Human'
 player2 = 'Computer'
@@ -37,13 +40,9 @@ following number keys
 '''
 print(myIntro)
 
-# Needs polishing, only works in first row
-def anticipateMove():
-	for i in validCombis:
-		if (i.count(p1Sign) or i.count(p2Sign) == 2) and i.count(' ') == 1:
-			return i[i.index(' ')]
-		else:
-			return r.choice(tFree)
+def potential3(z, y):
+	if z.count(y) == 2 and z.count(' ') == 1: # 2 equals + blank  
+		return True
 
 def validateLine(a, b, c):
 	if t[a]==t[b] and t[a]==t[c] and t[a]!=' ' :
@@ -68,20 +67,41 @@ def pMatrix():
 	C2 = '| {} '.format(t[7])
 	C3 = '| {} |'.format(t[8])
 	print('\n'+A1+A2+A3+'\n'+B1+B2+B3+'\n'+C1+C2+C3+'\n')
-		
+
+def calcMove(mySign):	
+	global t
+	breakLoop = False
+	for i in validCombis:
+		z = []
+		for y in i:
+			z.extend(t[y])
+			if len(z) == 3 and potential3(z, mySign) == True:
+				myCell = i[z.index(' ')] +1 # -1 later
+				return myCell
+	myCell = 10
+	return myCell
+
+def calcMovePriority():
+	myCell = calcMove(p2Sign) # p2 potential row first
+	if myCell == 10:
+		myCell = calcMove(p1Sign) # then check for p1
+		if myCell == 10:
+			myCell = r.choice(tFree) # if nothing found, go random
+	return myCell
+
 def placeMove(z):
 		global currentPlayer, t, tHistory, movesCount, tFree
 		if z == player2:
 			currentPlayer = player2
 			x = p2Sign
-			#z = r.choice(tFree)
-			z = anticipateMove()
+			z = calcMovePriority()  #r.choice(tFree)
 		else:
 			x = p1Sign
 			currentPlayer = player1
 		tHistory.append(z)
 		t[z-1] = x
-		tFree.remove(z)
+		if z in tFree:
+			tFree.remove(z)
 		movesCount += 1
 
 # force user input 1 to 9
@@ -107,4 +127,4 @@ while movesCount < 9:
 		placeMove(player2)
 		pMatrix()
 		checkLine()
-	#print('Taken:', tHistory, 'Free:', tFree) #DEBUG
+print('Game Over!')

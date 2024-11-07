@@ -23,6 +23,7 @@ tFree = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 validCombis = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[6,4,2]]
 movesCount = 0
 myPrompt = 'Your move, [1-9]: '
+p2Prompt = "Computer's move"
 myIntro = '''
 Classic TicTacToe game. 
 Try to put 3 on the same line.
@@ -124,6 +125,7 @@ while movesCount < 9:
 	pMatrix()
 	checkLine()
 	if movesCount < 9:
+		print(p2Prompt)
 		placeMove(player2)
 		pMatrix()
 		checkLine()

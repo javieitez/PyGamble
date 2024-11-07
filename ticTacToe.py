@@ -5,7 +5,6 @@
 import random as r
 from termcolor import cprint as p
 
-
 player1 = 'Human'
 player2 = 'Computer'
 p1Sign = 'X'
@@ -15,7 +14,10 @@ currentPlayer = ''
 t =	   [' ', ' ', ' ',' ', ' ', ' ',' ', ' ', ' '] 
 # keep move history
 tHistory = []
+# keep track of unused cells
 tFree = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# all possible wins
+validCombis = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[6,4,2]]
 movesCount = 0
 myPrompt = 'Your move, [1-9]: '
 myIntro = '''
@@ -25,7 +27,7 @@ Try to put 3 on the same line.
 Press [H] for Help
 '''
 myHelp ='''
-Place your move by using the 
+Place your move by using the  
 following number keys
 
 | 1 | 2 | 3 |
@@ -34,13 +36,21 @@ following number keys
 
 '''
 print(myIntro)
+
+# Needs polishing, only works in first row
+def anticipateMove():
+	for i in validCombis:
+		if (i.count(p1Sign) or i.count(p2Sign) == 2) and i.count(' ') == 1:
+			return i[i.index(' ')]
+		else:
+			return r.choice(tFree)
+
 def validateLine(a, b, c):
 	if t[a]==t[b] and t[a]==t[c] and t[a]!=' ' :
 		return True
 		
 def checkLine():
 	global movesCount
-	validCombis = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[6,4,2]]
 	for a in validCombis:
 		if validateLine(a[0],a[1],a[2]) == True:
 			print(currentPlayer, 'wins')
@@ -64,7 +74,8 @@ def placeMove(z):
 		if z == player2:
 			currentPlayer = player2
 			x = p2Sign
-			z = r.choice(tFree)
+			#z = r.choice(tFree)
+			z = anticipateMove()
 		else:
 			x = p1Sign
 			currentPlayer = player1

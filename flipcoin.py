@@ -1,8 +1,8 @@
 ##################################################################
+# 	Flip Coin 						##  github.com/javieitez   ##
 #
 # Exercise on randomness: flip a coin many times, 
 # then generate some facts on the results
-#
 ##################################################################
 
 # init some defaults

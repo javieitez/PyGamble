@@ -3,7 +3,7 @@
 # TicTacToe                ##  github.com/javieitez    ##
 #
 # Unlike other python based TicTacToe games, this one
-# is a real Human vs Computer. The computer checks for
+# plays real Human vs Computer. The computer checks for
 # potential 3s instead of just placing random movements 
 #########################################################
 import random as r
@@ -22,11 +22,11 @@ tFree = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # all possible wins
 validCombis = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[6,4,2]]
 movesCount = 0
-myPrompt = 'Your move, [1-9]: '
+p1Prompt = 'Your move, [1-9]: '
 p2Prompt = "Computer's move"
 myIntro = '''
 Classic TicTacToe game. 
-Try to put 3 on the same line.
+Try to place 3 on the same line.
 
 Press [H] for Help
 '''
@@ -71,7 +71,6 @@ def pMatrix():
 
 def calcMove(mySign):	
 	global t
-	breakLoop = False
 	for i in validCombis:
 		z = []
 		for y in i:
@@ -107,13 +106,13 @@ def placeMove(z):
 
 # force user input 1 to 9
 def makeMove():
-	global myPrompt
+	global p1Prompt
 	a = False
 	while a == False:
-		b = input(myPrompt)
+		b = input(p1Prompt)
 		if b.upper() == 'H':
 			print(myHelp) 
-		elif b.isdigit() and int(b) in tHistory:
+		elif b.isdigit() and int(b) in tHistory: # check if move has already been made
 			print('Already taken!')
 		a = b.isdigit() and int(b)>0 and int(b)<=9 and int(b) not in tHistory
 	placeMove(int(b))
@@ -124,7 +123,7 @@ while movesCount < 9:
 	makeMove()
 	pMatrix()
 	checkLine()
-	if movesCount < 9:
+	if movesCount < 9: # unless p1 has won
 		print(p2Prompt)
 		placeMove(player2)
 		pMatrix()

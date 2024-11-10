@@ -28,19 +28,19 @@ guessTries = 4
 cardNumber = random.choice(cardNumbers)
 suit = random.choice(suits)
 
-print('''
-      
+print('''      
         ** GUESS THE CARD **''')
 
 def displayCard():
-    rows = ['', '', '', '','']
-    rows[0] += '    ___ ' # top line of card
-    rows[1] += '   |## |' 
-    rows[2] += '   |###|   '
-    rows[3] += '   |_##|      {} tries left'.format(c(guessTries, 'white'))
-    rows[4] += ''
-    for row in rows:
-         print(c(row, 'green'))
+    cardRev = c(' ', 'green', 'on_green')
+    cardDeco = c('#', 'grey', 'on_green')
+    print('''	
+    {}{}{}{}{} 
+    {}{}{}{}{}
+    {}{}{}{}{}    {} tries left'
+		'''.format(cardRev, cardDeco, cardDeco, cardDeco, cardRev, 
+			cardRev, cardDeco, cardDeco, cardDeco,cardRev, 
+			cardRev, cardDeco, cardDeco,cardDeco, cardRev, c(guessTries, 'white')))
 
 def setCardColor():
     global suitColor
@@ -51,19 +51,25 @@ def setCardColor():
 
 setCardColor()
 
-def revealCard():
-    mySuit = suit2Icon(suit)
-    rows = ['', '', '', '','']
-    rows[0] += '    ___  ' # top line of card
-    rows[1] += '   |{} |'.format(cc(cardNumber.ljust(2), suitColor))
-    rows[2] += '   | {} |'.format(cc(mySuit, suitColor))
-    rows[3] += '   |_{}|'.format(cc(cardNumber.rjust(2), suitColor))
-    rows[4] += ''
-    for row in rows:
-         print(row)
+def revealCard(num, suit):
+	mySuit = suit2Icon(suit)
+	if mySuit == hearts or mySuit == diamonds:
+		suitColor = redSuitColor
+	else:
+		suitColor = blackSuitColor
+	bgColor = 'on_white'
+	cardSign = c(num, suitColor, bgColor)
+	cardBlank = c(' ', 'white', bgColor)
+	cardSuit = c(mySuit, suitColor, bgColor)
+	print('''
+    {}{}{}{}{} 
+    {}{}{}{}{}
+    {}{}{}{}{}    
+	'''.format(cardBlank, cardSign, cardBlank, cardBlank, cardBlank,
+			cardBlank, cardBlank, cardSuit, cardBlank, cardBlank,
+			cardBlank, cardBlank, cardBlank, cardSign, cardBlank))
 
 displayCard()
-
 # colored background card characters
 def cc(txt, color):
     return c(txt, color, 'on_white')
@@ -239,5 +245,5 @@ if hitSuit == True and hitNumber == True:
     bottomLine = winLine
 
 yourBetWas()
-revealCard()
+revealCard(cardNumber, suit)
 print(bottomLine)

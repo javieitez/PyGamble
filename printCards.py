@@ -14,18 +14,15 @@ hearts  = chr(9829)
 spades= chr(9824)
 blackSuitColor = 'grey'
 redSuitColor = 'red'
-reversedColor = 'on_green'
-
 
 def reverseCard():
-    cardRev = c(' ', 'green', reversedColor)
-    cardDeco = c('#', 'grey', reversedColor)
-    print('''
-		
+	
+    cardRev = c(' ', 'green', 'on_green')
+    cardDeco = c('#', 'grey', 'on_green')
+    print('''	
     {}{}{}{}{} 
     {}{}{}{}{}
     {}{}{}{}{}    
-
 		'''.format(cardRev, cardDeco, cardDeco, cardDeco, cardRev, 
 			cardRev, cardDeco, cardDeco, cardDeco,cardRev, 
 			cardRev, cardDeco, cardDeco,cardDeco, cardRev ))
@@ -36,19 +33,16 @@ def displayCard(num, suit):
 		suitColor = redSuitColor
 	else:
 		suitColor = blackSuitColor
-
 	bgColor = 'on_white'
 	cardSign = c(num, suitColor, bgColor)
 	cardBlank = c(' ', 'white', bgColor)
 	cardSuit = c(suit, suitColor, bgColor)
 	print('''
-     
     {}{}{}{}{} 
     {}{}{}{}{}
     {}{}{}{}{}    
-
 	'''.format(cardBlank, cardSign, cardBlank, cardBlank, cardBlank,
 			cardBlank, cardBlank, cardSuit, cardBlank, cardBlank,
 			cardBlank, cardBlank, cardBlank, cardSign, cardBlank))
-displayCard('Q', spades)
+displayCard('Q', hearts)
 reverseCard()

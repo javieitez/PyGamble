@@ -16,8 +16,8 @@
 ############################################################
 import random
 
-#quiniela = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-quiniela = ['2', '1', '2', '1', '1', 'X', 'X', '2', 'X', '1', '2', 'X', '1', 'X', '2'] #hardcoded for debug
+quiniela = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+#quiniela = ['2', '1', '2', '1', '1', 'X', 'X', '2', 'X', '1', '2', 'X', '1', 'X', '2'] #hardcoded for debug
 currentWeek = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 bets = ['1', 'X', '2']
 myRange= range(len(quiniela))
@@ -39,7 +39,7 @@ def compareResults():
 		tM[currentMatches] +=1
 	weeks +=1
 	years = (weeks*7)//365 # weeks to years, not considering leap years (this is a fun prog)
-'''
+
 # force user input 1, X or 2
 print('Chooose 15 bets: 1, X or 2. ')
 for i in myRange:
@@ -52,7 +52,7 @@ for i in myRange:
 			x = '0'
 		a = x == '1' or x.upper() == 'X' or x == '2'
 	currentWeek[i]= x.upper()
-'''
+
 print('Your bet:', quiniela)
 print('------------------------------------------------\n\n\n\n\n')
 print(f'\033[?25l', end='')#hide cursor, POSIX only
@@ -62,7 +62,7 @@ def pStats():
 			'\ncurrent:', currentMatches, 'Weeks:', weeks, 'Years:', years, 
 			'\nMatches: (0)', tM[0],'(1)', tM[1],'(2)', tM[2], '(3)', tM[3],'(4)', tM[4],'(5)', tM[5],
 			'(6)', tM[6],'\n(7)', tM[7],'(8)', tM[8],'(9)', tM[9],'(10)', tM[10],'(11)', tM[11],'(12)', 
-			tM[12],'(13)', tM[13], '(14)', tM[14],)
+			tM[12],'(13)', tM[13], '(14)', tM[14], end=' ')
 	if isWin:
 		print('You WON!!!            ')
 	else:

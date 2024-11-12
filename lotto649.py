@@ -8,14 +8,13 @@
 import random
 
 lottoWeek= [0, 0, 0, 0, 0, 0]
-#lottoCombi= [0, 0, 0, 0, 0, 0]
-lottoCombi= [7, 12, 26, 30, 41, 48] # hardcoded for debug
+lottoCombi= [0, 0, 0, 0, 0, 0]
+#lottoCombi= [7, 12, 26, 30, 41, 48] # hardcoded for debug
 myRange= range(len(lottoCombi))
 drawsPerWeek =3
 totalDraws = drawsCount= weeks= years= 0
 totalMatches= [0, 0, 0, 0, 0, 0] # counter for zeros, ones, twos, etc...
 
-'''
 # force user input 1 to 49
 print('Chooose six unique numbers, all between 1 and 49: ')
 for i in myRange:
@@ -26,18 +25,18 @@ for i in myRange:
 		if x.isdigit() and int(x) in lottoCombi: # already selected
 			print('Already taken, go again...')
 			x = '0'
-		elif not x.isdigit():
-			print('Must be a number...') # not a number
+		elif not x.isdigit(): # not a number
+			print('Must be a number...') 
 			x = '0'
-		elif int(x)>49:
-			print('Too big, go again...') # over range
+		elif int(x)>49: # over range
+			print('Too big, go again...') 
 			x = '0'
 		a = x.isdigit() and int(x)>0 and int(x)<=49 and int(x) not in lottoCombi
 	lottoCombi[i]= int(x)
-'''
+
 lottoCombi.sort()
 
-def weeklyRun():
+def sorteo():
 	global lottoWeek, weeks, years, drawsPerWeek, drawsCount, totalDraws
 	for i in myRange:
 		x = random.randint(1,49)
@@ -50,7 +49,7 @@ def weeklyRun():
 	if drawsCount == drawsPerWeek: #reset the counter and increase weeks
 		drawsCount = 0
 		weeks +=1
-	years = (weeks*7)//365 # weeks to years, not considering leap years
+	years = (weeks*7)//365 # weeks to years, not considering leap years (this is a fun prog)
 
 def compareResults():
 	global currentMatches, totalMatches
@@ -64,7 +63,7 @@ def compareResults():
 
 print('Your combination:', lottoCombi)
 print('------------------------------------------------\n\\n\\n\n\n\\n')
-		
+print(f'\033[?25l', end='')#hide cursor, POSIX only
 def pStats():
 	print(f'\033[F\033[F\033[FLotto:', lottoWeek, 
 			'\nMatches:', currentMatches, 'Draws:', totalDraws,'Weeks:', weeks, 'Years:', years, 
@@ -77,8 +76,10 @@ def pStats():
 
 isWin = False
 
-while isWin == False:
-	weeklyRun()
+while isWin == False:	
+	sorteo()
 	compareResults()
 	isWin= lottoCombi == lottoWeek
 	pStats()
+
+print(f'\033[?25h', end='')#bring cursor back, POSIX only

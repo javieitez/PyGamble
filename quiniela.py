@@ -16,12 +16,12 @@
 ############################################################
 import random
 
-quiniela = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-#quiniela = ['2', '1', '2', '1', '1', 'X', 'X', '2', 'X', '1', '2', 'X', '1', 'X', '2'] #hardcoded for debug
+#quiniela = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+quiniela = ['2', '1', '2', '1', '1', 'X', 'X', '2', 'X', '1', '2', 'X', '1', 'X', '2'] #hardcoded for debug
 currentWeek = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 bets = ['1', 'X', '2']
 myRange= range(len(quiniela))
-tM= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # counter for zeros, ones, twos, etc...
+tM= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] #counter for 0s, 1s, 2s, etc... must be one place longer
 weeks = years = currentMatches = 0
 
 def sorteo():
@@ -39,7 +39,7 @@ def compareResults():
 		tM[currentMatches] +=1
 	weeks +=1
 	years = (weeks*7)//365 # weeks to years, not considering leap years (this is a fun prog)
-
+'''
 # force user input 1, X or 2
 print('Chooose 15 bets: 1, X or 2. ')
 for i in myRange:
@@ -52,7 +52,7 @@ for i in myRange:
 			x = '0'
 		a = x == '1' or x.upper() == 'X' or x == '2'
 	currentWeek[i]= x.upper()
-
+'''
 print('Your bet:', quiniela)
 print('------------------------------------------------\n\n\n\n\n')
 print(f'\033[?25l', end='')#hide cursor, POSIX only

@@ -13,7 +13,7 @@ lottoCombi= [0, 0, 0, 0, 0, 0]
 myRange= range(len(lottoCombi))
 drawsPerWeek =3
 totalDraws = drawsCount= weeks= years= 0
-totalMatches= [0, 0, 0, 0, 0, 0] # counter for zeros, ones, twos, etc...
+tM= [0, 0, 0, 0, 0, 0, 0] #counter for 0s, 1s, 2s, etc... must be one place longer
 
 # force user input 1 to 49
 print('Chooose six unique numbers, all between 1 and 49: ')
@@ -52,13 +52,13 @@ def sorteo():
 	years = (weeks*7)//365 # weeks to years, not considering leap years (this is a fun prog)
 
 def compareResults():
-	global currentMatches, totalMatches
+	global currentMatches, tM
 	matches =0
 	for i in myRange:
 		if lottoCombi[i] in lottoWeek:
 			matches +=1
 		currentMatches = matches
-		totalMatches[currentMatches] +=1
+		tM[currentMatches] +=1
 			
 
 print('Your combination:', lottoCombi)
@@ -67,8 +67,8 @@ print(f'\033[?25l', end='')#hide cursor, POSIX only
 def pStats():
 	print(f'\033[F\033[F\033[FLotto:', lottoWeek, 
 			'\nMatches:', currentMatches, 'Draws:', totalDraws,'Weeks:', weeks, 'Years:', years, 
-			'\n0s:', totalMatches[0], '1s:', totalMatches[1], '2s:', totalMatches[2], 
-			'3s:', totalMatches[3], '4s:', totalMatches[4], '5s:', totalMatches[5], ' -- ', end=' ')
+			'\n0s:', tM[0], '1s:', tM[1], '2s:', tM[2], 
+			'3s:', tM[3], '4s:', tM[4], '5s:', tM[5], ' -- ', end=' ')
 	if isWin:
 		print('You WON!!!            ')
 	else:
